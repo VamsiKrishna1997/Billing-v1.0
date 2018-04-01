@@ -1,0 +1,263 @@
+<div class="container" ng-controller="Search">
+
+	<div class="rows" ng-show="searchshow">
+		<div class="col-md-12">
+			<div class="well">
+				<div class="row">
+					<div class="col-sm-2">
+						<label>Search By : </label>
+					</div>
+					<div class="col-md-5">
+						<label class="radio-inline"><input type="radio" ng-model="value" ng-change="changed(value)" value="invoice">Invoice Number</label>
+						<label class="radio-inline"><input type="radio" ng-model="value" ng-change="changed(value)" value="buyer">Buyer</label>
+						<label class="radio-inline"><input type="radio" ng-model="value" ng-change="changed(value)" value="date">Date</label>
+					</div>
+				</div>
+				<div class="row" style="margin-top:10px;" ng-show="invoiceshow">
+					<div class="col-sm-2">
+						<label>Enter Invoice Number:</label>	
+					</div>
+					<div class="col-md-5">
+						<input type="text" class= "form-control" ng-model = "selectedinvoice">
+					</div>
+				</div>
+				<div class="row" style="margin-top:10px;" ng-show="buyershow">
+					<div class="col-sm-2">
+						<label style="margin-top:5px;">Enter Buyer Name :</label>	
+					</div>
+					<div class="col-md-5">
+						<input type="text" class= "form-control" ng-model = "buyername" >
+					</div>
+				</div>
+				<div class="row" style="margin-top:10px;" ng-show="dateshow">
+					<div class="col-sm-2">
+						<label style="margin-top:5px;">Select Date :</label>	
+					</div>
+					<div class="col-md-5">
+						<input type="date" class= "form-control" ng-model = "selecteddate">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						<button type="button" class="btn btn-primary" style="width:100px; margin-top:10px;" ng-click="search()" ng-disabled="!selectedinvoice && !selecteddate && !buyername">Search</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="rows" ng-show="listshow">
+		<div class="col-lg-12">
+				<div class="list-group" ng-repeat="items in result[0] | filter:{buyer:'!!'}">
+				  <span href="#" class="list-group-item list-group-item-action" style="cursor: pointer;" ng-click="taxinvoice(items)">
+			  		<div class="row">
+			  			<div class="col-xs-2">
+			  				<strong> Buyer Name :</strong> {{items.buyer}}
+			  			</div>
+			  			<div class="col-xs-2">
+			  					<strong> Invoice Number :</strong> {{items.invoice}}
+			  			</div>
+			  			<div class="col-xs-2">
+			  					<strong> Date Of Purchase :</strong> {{items.date | date: 'dd/MM/yyyy'}}
+			  			</div>
+			  			<div class="col-xs-2">
+			  					<strong> Total :</strong> {{items.grandtotal | currency:'&#8377;'}}
+			  			</div>
+			  			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			  			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			  			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			  			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			  			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			  			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			  			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			  			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			  			
+			  			<span style="margin-top:7px;">&#8594;</span>
+			  		</div>
+			  </span>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="rows" ng-show="!result[0].length && showresult">
+		<div class="col-lg-12">
+			<div class="list-group" >
+				  <span href="#" class="list-group-item list-group-item-action" style="text-align: center;">
+				  	No Results For The Searched Item !
+				  </span>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+<div class="rows" ng-show="taxshow">
+		
+		<div class="row">
+			<div class="col-md-1" style="text-align: right;">
+				<button type="button" class="btn btn-primary" ng-click="back()">Back</button>
+			</div>
+			<div class="col-md-1" style="text-align: left;">
+				<a href=""><span class="glyphicon glyphicon-print" style="font-size: 30px;" ng-click="print('print_section')"></span></a>
+			</div>
+		</div>
+		<div id="print_section" style="max-width: 50cm;max-height: 100cm;height: 40cm;">
+		<div class="row" >
+         		<div class="col-sm-4"></div>
+         		<div class="col-sm-4" style="text-align: center;">
+         			<h2>TAX INVOICE</h2>
+         		</div>
+         		<div class="col-sm-4"></div>
+         	</div>
+         	
+         	<div class="row" style="margin-top:2px;">
+         		<div class="col-lg-4">
+         			<p>
+         				Company Name<br>
+         				Company Address<br>
+         				HYDERABAD - pincode<br>
+         				PH.NO : <br>
+         				TEL : 
+         			</p>
+         		</div>
+         		<div class="col-lg-6"></div>
+         		<div class="col-lg-2">
+         			<span>Invoice No</span> : <label>{{resultfiltered[0][0].invoice}}</label><br>
+         			<span>Date</span> : <label>{{resultfiltered[0][0].date | date: 'dd/MM/yyyy'}}</label>
+         		</div>
+         	</div>
+         	
+         	<div class="row">
+         		<div class="col-sm-6">
+         			GSTTIN : GSTTIN <br>
+         			EMAIL : EMAIL
+         		</div>
+         	</div>
+         	
+         	<div class="row" style="margin-top:5px;">
+         		<div class="col-sm-4">
+         			Buyer : <label>{{resultfiltered[0][0].buyer|uppercase}}</label>
+         		</div>
+         	</div>
+         	
+         	<div class="row" >
+         		
+         		<div class="col-md-5" style="margin-left:60px;">
+         			
+         			<label>{{resultfiltered[0][0].buyeraddress | uppercase}}</label>
+         		</div>
+         	</div>
+         	
+         	<div class="row" style="max-height: 60cm;height: 21cm;">
+         		<div class="col-md-12">
+         			<table class="table table-striped table-bordered" style="margin-top:15px;border-collapse:collapse;border: 1px solid black">
+				<thead>
+					<tr style=" border: 1px solid black">
+						<th style=" border: 1px solid black">Sno</th>
+						<th style=" border: 1px solid black">Description of Goods</th>
+						<th style=" border: 1px solid black">HSN</th>
+						<th style=" border: 1px solid black">Qty</th>
+						<th style=" border: 1px solid black">Price</th>
+						<th style=" border: 1px solid black">Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in filtereddata[0]" style=" border: 1px solid black">
+						<td style=" border: 1px solid black">{{$index+1}}</td>
+						<td style=" border: 1px solid black">{{item.itemname}}</td>
+						<td style=" border: 1px solid black">{{item.hsn}}</td>
+						<td style=" border: 1px solid black">{{item.qty}}</td>
+						<td style=" border: 1px solid black">{{item.price}}</td>
+						<td style=" border: 1px solid black">{{item.qty * item.price | currency:'&#8377;'}}</td>
+					</tr>
+				</tbody>
+			</table>	
+			
+         		</div>
+         	</div>
+         	
+         	<div class="row" >
+         		<div class="col-md-4"></div>
+         		<div class="col-md-4"></div>
+         		<div class="col-md-4">
+         			<table class="table table-striped table-bordered" style="border-collapse:collapse;border: 1px solid black">
+         				<tbody>
+         					<tr style=" border: 1px solid black">
+         						<td style=" border: 1px solid black">Total</td>
+         						<td style=" border: 1px solid black">{{resultfiltered[0][0].total | currency:'&#8377;'}}</td>
+         					</tr>
+         					<tr style=" border: 1px solid black">
+         						<td style=" border: 1px solid black">SGST</td>
+         						<td style=" border: 1px solid black">{{resultfiltered[0][0].sgst | currency:'&#8377;'}}</td>
+         					</tr>
+         					<tr style=" border: 1px solid black">
+         						<td style=" border: 1px solid black">CGST</td>
+         						<td style=" border: 1px solid black">{{resultfiltered[0][0].cgst | currency:'&#8377;'}}</td>
+         					</tr>
+         					<tr style=" border: 1px solid black">
+         						<td style=" border: 1px solid black">IGST</td>
+         						<td style=" border: 1px solid black">{{resultfiltered[0][0].igst | currency:'&#8377;'}}</td>
+         					</tr>
+         					<tr style=" border: 1px solid black">
+         						<td style=" border: 1px solid black">Transport</td>
+         						<td style=" border: 1px solid black">{{resultfiltered[0][0].transport | currency:'&#8377;'}}</td>
+         					</tr>
+         					<tr style=" border: 1px solid black">
+         						<td style=" border: 1px solid black">Grand Total</td>
+         						<td style=" border: 1px solid black">{{resultfiltered[0][0].grandtotal | currency:'&#8377;' }}</td>
+         					</tr>
+         					
+         					
+         					
+         				</tbody>
+         				
+         			</table>
+         		</div>
+         	</div>
+         	
+         	<div class="row" style="padding-bottom: 40px;">
+         		<div class="col-sm-8">
+         			A/c No : Account Number<br>
+         			Mobile No : Mobile Number<br>
+         			IFSC : IFSC Code
+         			
+         		</div>
+         		
+         		<div class="col-sm-4">
+         			For Company Name
+         		</div>
+         	</div>
+         	
+         	
+         	<div class="row" style="padding-bottom: 30px;">
+         		<div class="col-sm-8">
+         			Rupees :<strong> {{convertNumberToWords(resultfiltered[0][0].grandtotal)}}</strong>
+         		</div>
+         		
+         		<div class="col-sm-4" >
+         			Authorised Signature
+         		</div>
+         	</div>
+         	
+        </div>
+        </div>
+        
+	
+	
+	
+</div>

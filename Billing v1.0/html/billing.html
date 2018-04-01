@@ -1,0 +1,284 @@
+<div class="container" ng-controller="Billing">
+<div class="rows">
+	
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-md-6">
+			<div class="well">
+				<div class="row">
+				<div class="col-md-6">
+					<span>Buyer</span> : <input type="text" class="form-control" ng-model="buyer"><br>
+					
+				</div>
+				<div class="col-md-6">
+					<span>Buyer Address</span> : <textarea type="text" class="form-control" cols="40" rows="1" ng-model="buyeraddress"></textarea><br>
+				</div>
+				
+				
+			</div>
+			<div class="row">
+				<div class="col-md-9">
+					<span>Date</span> : <input type="date" class="form-control" ng-model="date"><br>
+				</div>
+				<div class="col-md-3">
+					<span>Invoice</span> : <input type="text" class="form-control" ng-model="invoice"><br>
+				</div>
+				
+			</div>
+				
+			</div>
+			</div>
+			<div class="col-md-6">
+			<div class="well">
+			<div class="row">
+				<div class="col-md-6">
+					<span>SGST</span> : <input type="text" class="form-control" ng-model="sgst"><br>
+					<span>IGST</span> : <input type="text" class="form-control" ng-model="igst"><br>
+				</div>
+				<div class="col-md-6">
+					<span>CGST</span> : <input type="text" class="form-control" ng-model="cgst"><br>
+					<span>Transport</span> : <input type="text" class="form-control" ng-model="transport"><br>
+				</div>
+			</div>
+			</div>
+			
+			</div>
+		</div>
+	
+		<div class="rows">
+		<div class="well">
+		
+			<span>Item</span> : <input type="text" class="form-control" ng-model="item.name"><br>
+			<span>HSN</span> : <input type="text" class="form-control" ng-model="item.hsn"><br>
+			<span>Price</span> : <input type="text" class="form-control" ng-model="item.price"><br>
+			<span>Qty</span> : <input type="text" class="form-control" ng-model="item.qty"><br>
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		
+	
+		
+			<button type="button" class="btn btn-primary" style="width: 100px;" ng-click="Add(item)" ng-disabled = "!item.name || !item.hsn || !item.price || !item.qty"> Add </button>			 
+		</div>
+		
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Sno</th>
+						<th>Description of Goods</th>
+						<th>HSN</th>
+						<th>Qty</th>
+						<th>Price</th>
+						<th>Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in item_info">
+						<td>{{$index+1}}</td>
+						<td>{{item.name}}</td>
+						<td>{{item.hsn}}</td>
+						<td>{{item.qty}}</td>
+						<td>{{item.price}}</td>
+						<td>{{item.qty * item.price | currency:'&#8377;'}}</td>
+						<td><a href="" class="glyphicon glyphicon-remove" style="font-size:20px;" ng-click="remove(item)"></a></td>
+					</tr>
+				</tbody>
+			</table>	
+			<div class="row">
+				<div class="col-md-10"></div>
+				<div class="col-md-2" style="text-align: center;">
+				  &nbsp &nbsp 
+					<button type="button" class="btn btn-primary" style="width: 100px; margin-bottom:15px;" data-toggle="modal" data-target = "#preview" ng-disabled="!buyer || !date || !sgst || !cgst || !check_item_info() || !buyeraddress " >Proceed</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+<div class="modal fade" id="preview"  >
+    <div class="modal-dialog modal-lg modal-dialog-centered" style="margin-top:40%;max-width: 50cm;width: 21cm;max-height: 100cm;height: 40cm;" >
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Comapny Name</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body" id="modal-body" style="max-width: 50cm;width: 21cm;max-height: 100cm;height: 40cm;">
+         	<div class="row">
+         		<div class="col-sm-4"></div>
+         		<div class="col-sm-4" style="text-align: center;">
+         			<h2>TAX INVOICE</h2>
+         		</div>
+         		<div class="col-sm-4"></div>
+         	</div>
+         	
+         	<div class="row" style="margin-top:2px;">
+         		<div class="col-sm-7">
+         			<p>
+         				Company Name<br>
+         				Comapny Address<br>
+         				HYDERABAD - pincode<br>
+         				PH.NO : <br>
+         				TEL :         			
+         			</p>
+         		</div>
+         		<div class="col-sm-2"></div>
+         		<div class="col-sm-3">
+         			<span>Invoice No</span> : <label>{{invoice}}</label><br>
+         			<span>Date</span> : <label>{{date| date: 'dd/MM/yyyy'}}</label>
+         		</div>
+         	</div>
+         	
+         	<div class="row">
+         		<div class="col-sm-6">
+         			GSTTIN : GSTTIN <br>
+         			EMAIL : EMAIL
+         		</div>
+         	</div>
+         		
+         	
+         	
+         	<div class="row" style="margin-top:5px;">
+         		<div class="col-sm-4">
+         			Buyer : <label>{{buyer|uppercase}}</label>
+         		
+         		</div>
+         	</div>
+         	
+         	
+         	<div class="row" >
+         		
+         		<div class="col-md-5" style="margin-left:48px;">
+         			
+         			<label>{{buyeraddress | uppercase}}</label>
+         		</div>
+         	</div>
+         	
+         	<div class="row" style="max-height: 60cm;height: 21cm;">
+         		<div class="col-md-12">
+         			<table class="table table-striped table-bordered" style="margin-top:15px;border: 1px solid black">
+				<thead>
+					<tr>
+						<th>Sno</th>
+						<th>Description of Goods</th>
+						<th>HSN</th>
+						<th>Qty</th>
+						<th>Price</th>
+						<th>Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in item_info">
+						<td>{{$index+1}}</td>
+						<td>{{item.name}}</td>
+						<td>{{item.hsn}}</td>
+						<td>{{item.qty}}</td>
+						<td>{{item.price | number}}</td>
+						<td>{{item.qty * item.price | currency:'&#8377;'}}</td>
+					</tr>
+				</tbody>
+			</table>	
+			
+         		</div>
+         	</div>
+         	
+         	<div class="row">
+         		<div class="col-md-4"></div>
+         		<div class="col-md-4"></div>
+         		<div class="col-md-4">
+         			<table class="table table-striped table-bordered">
+         				<tbody>
+         					<tr>
+         						<td>Total</td>
+         						<td>{{getTotal() | currency:'&#8377;'}}</td>
+         					</tr>
+         					<tr>
+         						<td>SGST({{sgst}}%)</td>
+         						<td>{{getSgst() | currency:'&#8377;'}}</td>
+         					</tr>
+         					<tr>
+         						<td>CGST({{cgst}}%)</td>
+         						<td>{{getCgst() | currency:'&#8377;'}}</td>
+         					</tr>
+         					<tr>
+         						<td>IGST({{igst}}%)</td>
+         						<td>{{getIgst() | currency:'&#8377;'}}</td>
+         					</tr>
+         					<tr>
+         						<td>Transport</td>
+         						<td>{{transport | currency:'&#8377;'}}</td>
+         					</tr>
+         					<tr>
+         						<td>Grand Total</td>
+         						<td>{{getGrandTotal() | currency:"&#8377;" }}</td>
+         					</tr>
+         					
+         					
+         					
+         				</tbody>
+         				
+         			</table>
+         		</div>
+         	</div>
+         	
+         	
+         	<div class="row" style="padding-bottom: 40px;">
+         		<div class="col-sm-8">
+         			A/c No : Bank Account NUmber<br>
+         			Mobile No : Mobile Number<br>
+         			IFSC : IFSC Code
+         		</div>
+         		
+         		<div class="col-sm-4">
+         			For Company Name
+					
+         		</div>
+         	</div>
+         	
+         	
+         	<div class="row" style="padding-bottom: 40px;">
+         		<div class="col-sm-8">
+         			Rupees :<strong> {{convertNumberToWords(getGrandTotal())}}</strong>
+         		</div>
+         		
+         		<div class="col-sm-4">
+         			Authorised Signature
+         		</div>
+         	</div>
+         	
+         	
+         	
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger"  ng-click="print_save('modal-body')" data-dismiss="modal">Print & Save</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+
+
+
+</div>

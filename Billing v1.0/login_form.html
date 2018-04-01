@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Sri Venkateshwara Traders</title>
+<link rel="stylesheet" href="css/main.css" type="text/CSS">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript">
+window.history.forward();
+function noBack(){
+	
+	window.history.forward();
+}
+
+
+</script>
+</head>
+<body oncontextmenu="return false;" onload="noBack()" onpageshow="if(event.persisted) noBack();" onunload="" >
+	<div class="content">
+		
+		<div class="login-form">
+			<img src="images/user_avatar.png" class="avatar">
+			<h2>Sri Venkateshwara Traders</h2>
+			<form action= "">
+				<span>Username:</span> <br><input type="text" name="username" id="username">
+				<span>Password:</span> <br><input type="password" name="password" id="password">
+				<label style="color: red;display: none;" id="errlbl">*Invalid Username Or Password</label>
+				<input type="submit" value="Login" style="cursor: pointer;">
+			</form>
+		</div>
+	</div>
+</body>
+</html>
